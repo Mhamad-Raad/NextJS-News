@@ -1,3 +1,5 @@
+import { MongoClient, ObjectId } from 'mongodb';
+
 import Details from '../../components/meetups/Details';
 
 export default function MeetupDetail(props) {
@@ -12,35 +14,43 @@ export default function MeetupDetail(props) {
 }
 
 export async function getStaticPaths() {
+  const client = await MongoClient.connect(
+    'mongodb+srv://hama:zaovGHK9dy9mrzPn@cluster0.byhcoaq.mongodb.net/meetups?retryWrites=true&w=majority'
+  );
+  const db = client.db();
+  const meetups = db.collection('meetups');
+  const result = await meetups.find().toArray();
+  client.close();
+
   return {
     fallback: false,
-    paths: [
-      {
-        params: {
-          meetId: 'm1',
-        },
+    paths: result.map((r) => ({
+      params: {
+        meetId: r._id.toString(),
       },
-      {
-        params: {
-          meetId: 'm2',
-        },
-      },
-    ],
+    })),
   };
 }
 
 export async function getStaticProps(context) {
   const meetId = context.params.meetId;
 
+  const client = await MongoClient.connect(
+    'mongodb+srv://hama:zaovGHK9dy9mrzPn@cluster0.byhcoaq.mongodb.net/meetups?retryWrites=true&w=majority'
+  );
+  const db = client.db();
+  const meetups = db.collection('meetups');
+  const result = await meetups.findOne({ _id: ObjectId(meetId) });
+  client.close();
+
+
   return {
     props: {
-      meetId: meetId,
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Python.svg/1200px-Python.svg.png',
-      title: 'Meetup 1',
-      address: 'Some address 5, 12345 Some City',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam',
+      meetId: result._id.toString(),
+      title: result.title,
+      image: result.image,
+      address: result.address,
+      description: result.description,
     },
   };
 }
