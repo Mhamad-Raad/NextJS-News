@@ -10,6 +10,7 @@ function NewMeetupForm(props) {
   const descriptionInputRef = useRef();
 
   function submitHandler(event) {
+    console.log('hereform')
     event.preventDefault();
 
     const enteredTitle = titleInputRef.current.value;
@@ -52,7 +53,7 @@ function NewMeetupForm(props) {
           ></textarea>
         </div>
         <div className={classes.actions}>
-          <button>Add Meetup</button>
+          <button type='submit'>Add Meetup</button>
         </div>
       </form>
     </Card>

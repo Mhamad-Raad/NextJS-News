@@ -1,10 +1,8 @@
 import { MongoClient } from 'mongodb';
 
 const handler = async (req, res) => {
-  if (req.methode === 'POST') {
+  if (req.method === 'POST') {
     const data = req.body;
-    const { title, image, address, description } = data;
-
     // fetch data here
     const client = await MongoClient.connect(
       'mongodb+srv://hama:zaovGHK9dy9mrzPn@cluster0.byhcoaq.mongodb.net/meetups?retryWrites=true&w=majority'
