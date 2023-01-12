@@ -1,11 +1,13 @@
 .header {
+  position: fixed;
+  top: 0;
   width: 100%;
   height: 5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #77002e;
-  padding: 0 10%;
+  background-color: #491279;
+  padding: 0 5%;
 }
 
 .logo {
@@ -29,11 +31,39 @@
 .header a {
   text-decoration: none;
   font-size: 1.5rem;
-  color: #fcb8d2;
+  color: #d3c2fd;
 }
 
 .header a:hover,
 .header a:active,
 .header a.active {
   color: white;
+}
+
+@media only screen and (max-width: 640px) {
+  .header {
+    padding: 0 5%;
+  }
+  .logo {
+    font-size: 1.1rem;
+  }
+
+  .header a {
+    font-size: 1rem;
+  }
+
+  .header li {
+    margin-left: 1rem;
+  }
+}
+
+
+@media only screen and (max-width: 360px) {
+  .logo {
+    font-size: 1rem;
+  }
+
+  .header a {
+    font-size: 0.8rem;
+  }
 }
